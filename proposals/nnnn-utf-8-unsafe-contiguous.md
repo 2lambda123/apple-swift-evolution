@@ -1,6 +1,12 @@
-<!-- utf8_processing.md -->
-
 # UTF-8 Processing Over Unsafe Contiguous Bytes
+
+* Proposal: [SE-NNNN](nnnn-utf-8-unsafe-contiguous.md)
+* Authors: [Michael Ilseman](https://github.com/milseman)
+* Review Manager: TBD
+* Status: **Awaiting implementation**
+* Implementation: (pending)
+* Upcoming Feature Flag: (pending)
+* Review: ([pitch](https://forums.swift.org/t/pitch-utf-8-processing-over-unsafe-contiguous-bytes/69715))
 
 ## Introduction and Motivation
 
