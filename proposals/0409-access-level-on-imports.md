@@ -1,12 +1,12 @@
 # Access-level modifiers on import declarations
 
-* Proposal: [SE-0409](0409-access-level-on-imports.md)
-* Author: [Alexis Laferrière](https://github.com/xymus)
-* Review Manager: [Frederick Kellison-Linn](https://github.com/Jumhyn)
-* Status: Status: **Active Review (September 14...26, 2023)**
-* Implementation: On main and release/5.9 gated behind the frontend flag `-enable-experimental-feature AccessLevelOnImport`
-* Upcoming Feature Flag: `InternalImports` (Enables Swift 6 behavior with imports defaulting to internal. Soon on main only.)
-* Review: ([pitch](https://forums.swift.org/t/pitch-access-level-on-import-statements/66657)) ([review](https://forums.swift.org/t/se-0409-access-level-modifiers-on-import-declarations/67290))
+- Proposal: [SE-0409](0409-access-level-on-imports.md)
+- Author: [Alexis Laferrière](https://github.com/xymus)
+- Review Manager: [Frederick Kellison-Linn](https://github.com/Jumhyn)
+- Status: Status: **Active Review (September 14...26, 2023)**
+- Implementation: On main and release/5.9 gated behind the frontend flag `-enable-experimental-feature AccessLevelOnImport`
+- Upcoming Feature Flag: `InternalImports` (Enables Swift 6 behavior with imports defaulting to internal. Soon on main only.)
+- Review: ([pitch](https://forums.swift.org/t/pitch-access-level-on-import-statements/66657)) ([review](https://forums.swift.org/t/se-0409-access-level-modifiers-on-import-declarations/67290))
 
 ## Introduction
 
@@ -17,7 +17,7 @@ This feature can hide implementation details from clients and helps to manage de
 
 ## Motivation
 
-Good practices guide us to separate public and internal services to avoid having external clients rely on internal details. 
+Good practices guide us to separate public and internal services to avoid having external clients rely on internal details.
 Swift already offers access levels with their respective modifiers to declarations and enforcement during type-checking,
 but there is currently no equivalent official feature for dependencies.
 
@@ -38,6 +38,7 @@ applying the access level to the imported declarations.
 Here's an example case where a module `DatabaseAdapter` is an implementation detail of the local module.
 We don't want to expose it to clients so we mark the import as `internal`.
 The compiler then allows references to it from internal functions but diagnoses references from the signature of public functions.
+
 ```swift
 internal import DatabaseAdapter
 
@@ -113,6 +114,7 @@ In the case of a `public` import, there is no restriction on how the imported de
 beyond the existing restrictions on imported `package` declarations which cannot be referenced from public declaration signatures.
 
 Here is an example of the approximate diagnostics produced from type-checking in a typical case with a `fileprivate` import.
+
 ```swift
 fileprivate import DatabaseAdapter
 
@@ -198,6 +200,7 @@ This will align the behavior of imports with declarations where the implicit acc
 It should help limit unintentional dependency creep as marking a dependency public will require an explicit modifier.
 
 As a result, the following import is public in Swift 5, and internal in Swift 6 mode.
+
 ```
 import ADependency
 ```
@@ -311,4 +314,3 @@ a change from a hidden dependency to a public dependency may break the distribut
 ## Acknowledgments
 
 Becca Royal-Gordon contributed to the design and wrote the pre-pitch of this proposal.
-
