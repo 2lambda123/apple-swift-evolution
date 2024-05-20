@@ -1,18 +1,18 @@
 # Package Registry Service
 
-* Proposal: [SE-0292](0292-package-registry-service.md)
-* Authors: [Bryan Clark](https://github.com/clarkbw),
-           [Whitney Imura](https://github.com/whitneyimura),
-           [Mattt Zmuda](https://github.com/mattt)
-* Review Manager: [Tom Doron](https://github.com/tomerd)
-* Status: **Accepted**
-* Implementation: [apple/swift-package-manager#3023](https://github.com/apple/swift-package-manager/pull/3023)
-* Review:
+- Proposal: [SE-0292](0292-package-registry-service.md)
+- Authors: [Bryan Clark](https://github.com/clarkbw),
+  [Whitney Imura](https://github.com/whitneyimura),
+  [Mattt Zmuda](https://github.com/mattt)
+- Review Manager: [Tom Doron](https://github.com/tomerd)
+- Status: **Accepted**
+- Implementation: [apple/swift-package-manager#3023](https://github.com/apple/swift-package-manager/pull/3023)
+- Review:
   [1](https://forums.swift.org/t/se-0292-package-registry-service/)
   [2](https://forums.swift.org/t/se-0292-2nd-review-package-registry-service/)
   [3](https://forums.swift.org/t/se-0292-3rd-review-package-registry-service/)
   [Amendment](https://forums.swift.org/t/amendment-se-0292-package-registry-service/)
-* Previous Revision:
+- Previous Revision:
   [1](https://github.com/apple/swift-evolution/blob/b48527526b5748a60b0b23846d5880e9cc2c4711/proposals/0292-package-registry-service.md)
   [2](https://github.com/apple/swift-evolution/blob/53bd6d3813c40ebd07701727c8cfb6fedd751e2a/proposals/0292-package-registry-service.md)
   [3](https://github.com/apple/swift-evolution/blob/971d1f43bce718a45227432782a312cc5de99870/proposals/0292-package-registry-service.md)
@@ -36,25 +36,25 @@ and attempts to resolve the version requirements from the available tags.
 Although Git is a capable version-control system,
 it's not well-suited to this kind of workflow for the following reasons:
 
-* **Reproducibility**:
+- **Reproducibility**:
   A version tag in the Git repository for a dependency
   can be reassigned to another commit at any time.
   This can cause a project to produce different build results
   depending on when it was built.
-* **Availability**:
+- **Availability**:
   The Git repository for a dependency can be moved or deleted,
   which can cause subsequent builds to fail.
-* **Efficiency**:
+- **Efficiency**:
   Cloning the Git repository for a dependency
   downloads all versions of a package when only one is used at a time.
-* **Speed**:
+- **Speed**:
   Cloning a Git repository for a dependency can be slow
   if it has a large history.
   Also, cloning a Git repository is expensive for both the server and client,
   and may be significantly slower than downloading the same content
   using HTTP through a [content delivery network (CDN)][CDN].
 
-Many language ecosystems have a *package registry*, including
+Many language ecosystems have a _package registry_, including
 [RubyGems] for Ruby,
 [PyPI] for Python,
 [npm] for JavaScript, and
@@ -146,7 +146,7 @@ We propose using a scoped identifier
 in the form `scope.package-name`
 to identify package dependencies.
 
-A *scope* provides a namespace for related packages within a package registry.
+A _scope_ provides a namespace for related packages within a package registry.
 A package scope consists of
 alphanumeric characters and hyphens.
 Hyphens may not occur at the beginning or end,
@@ -158,7 +158,7 @@ A valid package scope matches the following regular expression pattern:
 \A[a-zA-Z\d](?:[a-zA-Z\d]|-(?=[a-zA-Z\d])){0,38}\z
 ```
 
-A package's *name* uniquely identifies a package in a scope.
+A package's _name_ uniquely identifies a package in a scope.
 A package name consists of alphanumeric characters, underscores, and hyphens.
 Hyphens and underscores may not occur at the beginning or end,
 nor consecutively within a name.
@@ -313,18 +313,18 @@ it's saved to `Package.resolved`.
 
 ```json
 {
-    "object": {
-        "pins": [
-            {
-                "package": "mona.LinkedList",
-                "state": {
-                    "checksum": "ed008d5af44c1d0ea0e3668033cae9b695235f18b1a99240b7cf0f3d9559a30d",
-                    "version": "1.2.0"
-                }
-            }
-        ]
-    },
-    "version": 1
+  "object": {
+    "pins": [
+      {
+        "package": "mona.LinkedList",
+        "state": {
+          "checksum": "ed008d5af44c1d0ea0e3668033cae9b695235f18b1a99240b7cf0f3d9559a30d",
+          "version": "1.2.0"
+        }
+      }
+    ]
+  },
+  "version": 1
 }
 ```
 
@@ -482,7 +482,6 @@ $ cat .swiftpm/configuration/registries.json
   },
   "version": 1
 }
-
 ```
 
 If no registry is configured,
@@ -519,7 +518,6 @@ $ cat .swiftpm/configuration/registries.json
   },
   "version": 1
 }
-
 ```
 
 When a custom registry is associated with a package scope,
@@ -596,10 +594,10 @@ the behavior of `swift package resolve` and related commands
 depends on the following factors,
 in descending order of precedence:
 
-* The package manifest in the current directory (`./Package.swift`)
-* Any existing lock file (`./Package.resolved`)
-* Any local configuration (`./.swiftpm/configuration/registries.json`)
-* Any global configuration file (`~/.swiftpm/configuration/registries.json`)
+- The package manifest in the current directory (`./Package.swift`)
+- Any existing lock file (`./Package.resolved`)
+- Any local configuration (`./.swiftpm/configuration/registries.json`)
+- Any global configuration file (`~/.swiftpm/configuration/registries.json`)
 
 #### Specifying credentials for a custom registry
 
@@ -684,7 +682,6 @@ that assigns its alternate location.
   ],
   "version": 1
 }
-
 ```
 
 When a mirror URL is set for a package identifier,
@@ -759,9 +756,9 @@ goes a long way to mitigate the overall risk.
 Swift Package Manager could further mitigate this risk
 by taking the following measures:
 
-* Enforcing HTTPS for all URLs
-* Resolving URLs using DNS over HTTPS (DoH)
-* Requiring URLs with Internationalized Domain Names (IDNs)
+- Enforcing HTTPS for all URLs
+- Resolving URLs using DNS over HTTPS (DoH)
+- Requiring URLs with Internationalized Domain Names (IDNs)
   to be represented as Punycode
 
 ### Tampering
@@ -800,7 +797,7 @@ in an attempt to exploit
 a known vulnerability like [Zip Slip],
 or a common software weakness like susceptibility to a [Zip bomb].
 Swift Package Manager should take care to
-identify and protect against these kinds of attacks 
+identify and protect against these kinds of attacks
 in its implementation of source archive decompression.
 
 ### Repudiation
@@ -879,13 +876,12 @@ in an attempt to reduce the availability of those resources.
 ```json
 {
   "registries": {
-      "[default]": {
-        "url": "https://private.example.com"
-      }
+    "[default]": {
+      "url": "https://private.example.com"
+    }
   },
   "version": 1
 }
-
 ```
 
 The likelihood of this attack is generally low
@@ -1017,7 +1013,7 @@ and artifact repository services, such as
 [Docker Hub],
 [JFrog Artifactory],
 and [AWS CodeArtifact]
-follow what we describe as a *"push"* model of publication:
+follow what we describe as a _"push"_ model of publication:
 When a package owner wants to releases a new version of their software,
 they produce a build locally and push the resulting artifact to a server.
 This model has the benefit of operational simplicity and flexibility.
@@ -1028,7 +1024,7 @@ before uploading them to the server.
 Alternatively,
 a system might incorporate build automation techniques like
 continuous integration (CI) and continuous delivery (CD)
-into what we describe as a *"pull"* model:
+into what we describe as a _"pull"_ model:
 When a package owner wants to release a new version of their software,
 their sole responsibility is to notify the package registry;
 the server does all the work of downloading the source code
@@ -1052,9 +1048,9 @@ to ensure the health of the ecosystem.
 At the same time,
 there are valid reasons why a package release may be removed:
 
-* The package maintainer publishing a release by mistake
-* A security researcher disclosing a vulnerability for a release
-* The registry being compelled by law enforcement to remove a release
+- The package maintainer publishing a release by mistake
+- A security researcher disclosing a vulnerability for a release
+- The registry being compelled by law enforcement to remove a release
 
 It's unclear whether and to what extent package deletion policies
 should be informed by the registry specification itself.
@@ -1154,17 +1150,21 @@ information about security advisories.
 
 ```jsonc
 {
-    "releases": { /* ... */ },
-    "advisories": [{
-        "cve": "CVE-20XX-12345",
-        "cwe": "CWE-400",
-        "package": "mona.LinkedList",
-        "vulnerable_versions": "<=1.0.0",
-        "patched_versions": ">1.0.0",
-        "severity": "moderate",
-        "recommendation": "Update to version 1.0.1 or later.",
-        /* additional fields */
-    }]
+  "releases": {
+    /* ... */
+  },
+  "advisories": [
+    {
+      "cve": "CVE-20XX-12345",
+      "cwe": "CWE-400",
+      "package": "mona.LinkedList",
+      "vulnerable_versions": "<=1.0.0",
+      "patched_versions": ">1.0.0",
+      "severity": "moderate",
+      "recommendation": "Update to version 1.0.1 or later.",
+      /* additional fields */
+    },
+  ],
 }
 ```
 
